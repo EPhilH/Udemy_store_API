@@ -7,7 +7,7 @@ from security import authenticate, identity
 from resources.user import UserRegister
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
-from db import db
+
 
 
 
@@ -17,9 +17,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # This turns off Flasks mo
 app.secret_key = "Phil"
 api = Api(app)
 
-@app.before_first_request       #Using an inbuilt flask decorator.. the below function only runs before the very first request
-def create_tables():            
-    db.create_all()             #SQLAlchemy will create the tables in the database if they dont already exist. If they do exist it wont do anything.
 
 
 jwt = JWT(app, authenticate, identity) # JWT creates a new endpoint - /auth/
