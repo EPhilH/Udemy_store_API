@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 import flask.scaffold
 flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
@@ -12,7 +14,7 @@ from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///data.db") #Uses Heroku environment variable for SQlite... if runnig locally it wont find this so will then create a sqllite local database. 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # This turns off Flasks modification tracker for SQLAlchemy, saves memory. SQLAlchemy has an inbuilt modification tracker.
 app.secret_key = "Phil"
 api = Api(app)
